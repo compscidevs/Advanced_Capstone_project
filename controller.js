@@ -53,6 +53,11 @@ class Agreement {
 
     return terms;
   }
+
+  // Method to print terms
+  printTerms() {
+    console.log("Extracted Terms:", this.extractedTerms);
+  }
 }
 
 // Controller function to read and process controller.json
@@ -81,13 +86,17 @@ async function processAgreementRequest() {
       description
     );
 
+    // Print terms immediately after creation
+    console.log("Terms extracted from controller.json:");
+    agreement.printTerms();
+
     // Call model to save agreement
     const savedAgreement = await AgreementModel.createAgreement(agreement);
 
     // Update status (this could be moved to model logic later)
     savedAgreement.status = 'Confirmed';
 
-    // Log result (simulating API response)
+    // Log result (simulating API response) and print terms again
     console.log({
       message: 'Agreement created',
       id: savedAgreement.id,
@@ -99,6 +108,7 @@ async function processAgreementRequest() {
         status: savedAgreement.status
       }
     });
+    console.log("Final Extracted Terms after saving:", savedAgreement.extractedTerms);
 
     return savedAgreement;
   } catch (error) {
@@ -106,5 +116,16 @@ async function processAgreementRequest() {
     throw error;
   }
 }
+
+// Example usage to test with a manual agreement
+const testAgreement = new Agreement(
+  "123-456-7890",
+  "987-654-3210",
+  "John",
+  "Jane",
+  "Sell 100kg of maize to Jane at Busega market for 200,000 UGX by this Friday by 10 AM"
+);
+console.log("Terms from test agreement:");
+testAgreement.printTerms();
 
 module.exports = { processAgreementRequest };
