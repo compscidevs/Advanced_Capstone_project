@@ -1,4 +1,4 @@
-const db = require('./database.js');
+const db = require('./database');
 
 class UserModel {
     // Get all users from the database
@@ -36,7 +36,31 @@ class UserModel {
                 return;
             }
             callback(null, { lastID: this.lastID });
-        })
+        });
+    }
+
+    // Update a user
+    static update(id, name, phone, callback) {
+        const sql = 'UPDATE users SET name = ?, phone = ? WHERE id = ?';
+        db.run(sql, [name, phone, id], function(err) {
+            if (err) {
+                callback(err, null);
+                return;
+            }
+            callback(null, { changes: this.changes });
+        });
+    }
+
+    // Delete a user
+    static delete(id, callback) {
+        const sql = 'DELETE FROM users WHERE id = ?';
+        db.run(sql, [id], function(err) {
+            if (err) {
+                callback(err, null);
+                return;
+            }
+            callback(null, { changes: this.changes });
+        });
     }
 }
 

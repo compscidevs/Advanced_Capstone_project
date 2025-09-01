@@ -1,53 +1,98 @@
 const UserModel = require('../models/userModel');
 
-const userController = {
-    // Controller method to get all users
-    getAllUsers: (req, res) => {
-        UserModel.getAll((err, users) => {
-            if (err) {
-                res.status(500).json({ "error": err.message });
-                return;
-            }
-            // show the list of users
-            res.json(users);
-        });
-    },
-    
-    // Controller method to get a single user by ID
-    getSingleUser: (req, res) => {
-        const id = req.params.id;
-        UserModel.getById(id, (err, user) => {
-            if (err) {
-                res.status(500).json({ "error": err.message });
-                return;
-            }
-            if (!user) {
-                res.status(404).json({ "message": "User not found" });
-                return;
-            }
-            res.json(user);
-        });
-    },
-    
-    // Controller method to get a single user by ID
-    createUser: (req, res) => {
-        const { name, phone } = req.body;
-        if (!name || !phone) {
-            res.status(400).send('Name and phone number are required.');
-            return;
+// Get all users
+exports.getAllUsers = (req, res) => {
+    UserModel.getAll((err, users) => {
+        if (err) {
+            return res.status(500).json({ error: 'Database error' });
         }
-
-        UserModel.create(name, phone, (err, result) => {
-            if (err) {
-                console.error('Error creating user:', err.message);
-                res.status(500).send('Error creating user');
-                return;
-            }
-            console.log(`User created with ID: ${result.lastID}`);
-            // Redirect the user back to the list of users after successful creation
-            res.redirect('/users');
-        });    
-    }
+        res.render('users', { users });
+    });
 };
 
-module.exports = userController;
+// Get user by ID (API response)
+exports.getUserById = (req, res) => {
+    const id = req.params.id;
+    UserModel.getById(id, (err, user) => {
+        if (err) {
+            return res.status(500).json({ error: 'Database error' });
+        }
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json(user);
+    });
+};
+
+// Show create user form
+exports.showCreateForm = (req, res) => {
+    res.render('create_user', { error: null });
+};
+
+// Create a new user
+exports.createUser = (req, res) => {
+    const { name, phone } = req.body;
+    const phoneRegex = /^\+?\d{10,15}$/;
+    if (!name || !phone) {
+        return res.render('create_user', { error: 'Name and phone are required' });
+    }
+    if (!phoneRegex.test(phone)) {
+        return res.render('create_user', { error: 'Invalid phone number format (e.g., 1234567890 or +1234567890)' });
+    }
+    UserModel.create(name, phone, (err, result) => {
+        if (err) {
+            return res.render('create_user', { error: 'Failed to create user: ' + err.message });
+        }
+        res.redirect('/users');
+    });
+};
+
+// Show edit user form
+exports.showEditForm = (req, res) => {
+    const id = req.params.id;
+    UserModel.getById(id, (err, user) => {
+        if (err) {
+            return res.status(500).json({ error: 'Database error' });
+        }
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.render('edit_user', { user, error: null });
+    });
+};
+
+// Update a user
+exports.updateUser = (req, res) => {
+    const id = req.params.id;
+    const { name, phone } = req.body;
+    const phoneRegex = /^\+?\d{10,15}$/;
+    if (!name || !phone) {
+        return res.render('edit_user', { user: { id, name, phone }, error: 'Name and phone are required' });
+    }
+    if (!phoneRegex.test(phone)) {
+        return res.render('edit_user', { user: { id, name, phone }, error: 'Invalid phone number format (e.g., 1234567890 or +1234567890)' });
+    }
+    UserModel.update(id, name, phone, (err, result) => {
+        if (err) {
+            return res.render('edit_user', { user: { id, name, phone }, error: 'Failed to update user: ' + err.message });
+        }
+        if (result.changes === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.redirect('/users');
+    });
+};
+
+// Delete a user
+exports.deleteUser = (req, res) => {
+    const id = req.params.id;
+    UserModel.delete(id, (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Database error' });
+        }
+        if (result.changes === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.redirect('/users');
+    });
+};
