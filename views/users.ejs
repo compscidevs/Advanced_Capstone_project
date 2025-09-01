@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link rel="stylesheet" href="../public/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>User List</h1>
+        <p>Below is the list of users in the database:</p>
+        <ul>
+            <% users.forEach(user => { %>
+                <li>
+                    <%= user.name %> - <%= user.phone %> (ID: <%= user.id %>)
+                    <a href="/users/<%= user.id %>/edit">Edit</a>
+                    <a href="/users/<%= user.id %>/delete" onclick="return confirm('Are you sure?')">Delete</a>
+                </li>
+            <% }) %>
+        </ul>
+        <a href="/users/create" class="create-link">Create a New User</a>
+        <p>Test the API:</p>
+        <ul>
+            <li><a href="/users/1">GET /users/1</a> - Get user with ID 1</li>
+            <li><a href="/users/2">GET /users/2</a> - Get user with ID 2</li>
+        </ul>
+    </div>
+</body>
+</html>
