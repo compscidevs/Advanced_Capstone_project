@@ -10,5 +10,4 @@ router.get('/:id', userController.getUserById); // Get user by ID (API)
 router.get('/:id/edit', userController.showEditForm); // Show edit user form
 router.post('/:id/edit', userController.updateUser); // Handle update user form submission
 router.get('/:id/delete', userController.deleteUser); // Delete user (using GET for simplicity; use POST in production)
-
 module.exports = router;
