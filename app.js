@@ -43,7 +43,9 @@ process.on('SIGINT', () => {
     });
 });
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+// // Start the server
+// app.listen(PORT, () => {
+//     console.log(`Server running on http://localhost:${PORT}`);
+// });
+
+module.exports = app;
