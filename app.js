@@ -3,6 +3,7 @@ const path = require('path');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const userRoutes = require('./routes/userRoutes');
+const agreementRoutes = require('./routes/agreementRoutes');
 const db = require('./models/database');
 
 const app = express();
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/users', userRoutes);
+app.use('/agreements', agreementRoutes);
 
 // Graceful shutdown for database
 process.on('SIGINT', () => {
@@ -42,10 +44,5 @@ process.on('SIGINT', () => {
         process.exit(0);
     });
 });
-
-// // Start the server
-// app.listen(PORT, () => {
-//     console.log(`Server running on http://localhost:${PORT}`);
-// });
 
 module.exports = app;

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agreements</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .agreement-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .agreement-item h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        .agreement-item p {
+            white-space: pre-wrap;
+        }
+        .parties {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Agreements</h1>
+        <a href="/agreements/create" class="create-button">Create New Agreement</a>
+        <div id="agreement-list">
+            <% agreements.forEach(agreement => { %>
+                <div class="agreement-item">
+                    <h3><%= agreement.title %></h3>
+                    <div class="parties">
+                        <strong>Parties:</strong> <%= agreement.partyA_phone %> and <%= agreement.partyB_phone %>
+                    </div>
+                    <p><%= agreement.content %></p>
+                    <small>Created: <%= new Date(agreement.created_at).toLocaleDateString() %></small>
+                    <a href="/agreements/<%= agreement.id %>/edit">Edit</a>
+                    <a href="/agreements/<%= agreement.id %>/delete" onclick="return confirm('Are you sure?')">Delete</a>
+
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>
