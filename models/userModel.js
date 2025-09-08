@@ -27,10 +27,23 @@ class UserModel {
         });
     }
 
+    // Get a single user by their phone
+    static getByPhone(phone, callback) {
+        const sql = "SELECT * FROM users WHERE phone = ?";
+        db.get(sql, [phone], (err, row) => {
+            if (err) {
+                console.error(err.message);
+                callback(err, null);
+            } else {
+                callback(null, row);
+            }
+        });
+    }
+
     // Create a new user
-    static create(name, phone, callback) {
-        const sql = 'INSERT INTO users (name, phone) VALUES (?, ?)';
-        db.run(sql, [name, phone], function(err) {
+    static create(name, password, phone, callback) {
+        const sql = 'INSERT INTO users (name, password, phone) VALUES (?, ?, ?)';
+        db.run(sql, [name, password, phone], function(err) {
             if (err) {
                 callback(err, null);
                 return;
@@ -40,9 +53,9 @@ class UserModel {
     }
 
     // Update a user
-    static update(id, name, phone, callback) {
-        const sql = 'UPDATE users SET name = ?, phone = ? WHERE id = ?';
-        db.run(sql, [name, phone, id], function(err) {
+    static update(id, name, password, phone, callback) {
+        const sql = 'UPDATE users SET name = ?, password = ?, phone = ? WHERE id = ?';
+        db.run(sql, [name, password, phone, id], function(err) {
             if (err) {
                 callback(err, null);
                 return;

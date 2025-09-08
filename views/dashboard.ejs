@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Agreement App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .dashboard-container {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+        .dashboard-title {
+            color: #007bff;
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+        .dashboard-info {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .dashboard-links {
+            margin-top: 24px;
+        }
+        .dashboard-link-btn {
+            display: inline-block;
+            margin: 0 10px;
+            background: #007bff;
+            color: #fff;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .dashboard-link-btn:hover {
+            background: #0056b3;
+        }
+        .agreement-list {
+            margin-top: 24px;
+            text-align: left;
+        }
+        .agreement-list h2 {
+            color: #007bff;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .agreement-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .agreement-list li {
+            background: #f9f9f9;
+            margin-bottom: 12px;
+            padding: 16px 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .agreement-actions a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 12px;
+            transition: text-decoration 0.2s, color 0.2s;
+        }
+        .agreement-actions a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-title">Welcome, <%= user.name %>!</div>
+        <div class="dashboard-info">
+            Phone: <strong><%= user.phone %></strong><br>
+            User ID: <strong><%= user.id %></strong>
+        </div>
+        <div class="dashboard-links">
+            <a href="/agreements/create" class="dashboard-link-btn">Create Agreements</a>
+            <!-- <a href="/agreements" class="dashboard-link-btn">View ALl Agreements</a> -->
+            <a href="/users/<%= user.id %>/edit" class="dashboard-link-btn">Edit Profile</a>
+            <a href="/users/<%= user.id %>/delete" class="dashboard-link-btn" onclick="return confirm('Are you sure you want to delete your account?')">Delete Profile</a>
+            <a href="/logout" class="dashboard-link-btn">Logout</a>
+        </div>
+        <div class="agreement-list">
+            <h2>Agreements You Created</h2>
+            <ul>
+                <% if (createdAgreements && createdAgreements.length > 0) { %>
+                    <% createdAgreements.forEach(agreement => { %>
+                        <li>
+                            <span>
+                                <a href="/agreements/<%= agreement.id %>"><%= agreement.title %></a>
+                                <small>(Status: <%= agreement.status %>)</small>
+                            </span>
+                            <span class="agreement-actions">
+                                <a href="/agreements/<%= agreement.id %>/edit">Edit</a>
+                                <a href="/agreements/<%= agreement.id %>/delete" onclick="return confirm('Are you sure?')">Delete</a>
+                            </span>
+                        </li>
+                    <% }) %>
+                <% } else { %>
+                    <li>No agreements created by you.</li>
+                <% } %>
+            </ul>
+            <h2>Agreements Where You Are Tagged</h2>
+            <ul>
+                <% if (taggedAgreements && taggedAgreements.length > 0) { %>
+                    <% taggedAgreements.forEach(agreement => { %>
+                        <li>
+                            <span>
+                                <a href="/agreements/<%= agreement.id %>"><%= agreement.title %></a>
+                                <small>(Status: <%= agreement.status %>)</small>
+                            </span>
+                            <% if (agreement.status === 'pending') { %>
+                                <span class="agreement-actions">
+                                    <form action="/agreements/<%= agreement.id %>/confirm" method="POST" style="display:inline;">
+                                        <button type="submit" style="background:#28a745;color:#fff;border:none;border-radius:4px;padding:6px 14px;cursor:pointer;">Confirm</button>
+                                    </form>
+                                    <form action="/agreements/<%= agreement.id %>/deny" method="POST" style="display:inline;">
+                                        <button type="submit" style="background:#dc3545;color:#fff;border:none;border-radius:4px;padding:6px 14px;cursor:pointer;">Deny</button>
+                                    </form>
+                                </span>
+                            <% } else { %>
+                                <span class="agreement-actions">
+                                    <strong style="color:<%= agreement.status === 'confirmed' ? '#28a745' : '#dc3545' %>;">
+                                        <%= agreement.status.charAt(0).toUpperCase() + agreement.status.slice(1) %>
+                                    </strong>
+                                </span>
+                            <% } %>
+                        </li>
+                    <% }) %>
+                <% } else { %>
+                    <li>No agreements where you are tagged.</li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

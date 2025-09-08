@@ -40,13 +40,11 @@ createAgreementsTable();
 exports.createAgreement = (title, content, partyA_phone, partyB_phone, created_by, callback) => {
     const sql = 'INSERT INTO agreements (title, content, partyA_phone, partyB_phone, created_by) VALUES (?, ?, ?, ?, ?)';
     db.run(sql, [title, content, partyA_phone, partyB_phone, created_by], function(err) {
-        if (err) {
-            callback(err, null);
-            return;
-        }
-        callback(null, { lastID: this.lastID });
+        callback(err, { lastID: this.lastID });
     });
 };
+
+
 
 /**
  * Retrieves all agreements from the database.
@@ -128,5 +126,50 @@ exports.deleteAgreement = (id, user, callback) => {
             if (err) return callback(err);
             callback(null, { changes: this.changes });
         });
+    });
+};
+
+/**
+ * Get all agreements created by a specific user (by userId).
+ * @param {string|number} userId
+ * @param {function} callback
+ */
+exports.getAgreementsByCreator = (userPhone, callback) => {
+    const sql = `
+        SELECT id, title, content, partyA_phone, partyB_phone, status, created_by, created_at
+        FROM agreements
+        WHERE created_by = ?
+        ORDER BY created_at DESC
+    `;
+    db.all(sql, [userPhone], (err, rows) => {
+        if (err) return callback(err, null);
+        callback(null, rows);
+    });
+};
+
+/**
+ * Get all agreements where the user is tagged as partyB (by phone),
+ * but is NOT the creator.
+ * @param {string} phone
+ * @param {function} callback
+ */
+exports.getAgreementsWhereTagged = (phone, callback) => {
+    const sql = `
+        SELECT id, title, content, partyA_phone, partyB_phone, status, created_by, created_at
+        FROM agreements
+        WHERE partyB_phone = ?
+        AND created_by != ?
+        ORDER BY created_at DESC
+    `;
+    db.all(sql, [phone, phone], (err, rows) => {
+        if (err) return callback(err, null);
+        callback(null, rows);
+    });
+};
+
+exports.updateAgreementStatus = (id, status, callback) => {
+    const sql = 'UPDATE agreements SET status = ? WHERE id = ?';
+    db.run(sql, [status, id], function(err) {
+        callback(err);
     });
 };

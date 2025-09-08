@@ -12,7 +12,8 @@
     "express-rate-limit": "^8.0.1",
     "helmet": "^8.1.0",
     "mongoose": "^8.18.0",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "express-session": "^1.17.3"
   },
   "repository": {
     "type": "git",

@@ -31,7 +31,7 @@ exports.showCreateForm = (req, res) => {
 
 // Create a new user
 exports.createUser = (req, res) => {
-    const { name, phone } = req.body;
+    const { name, password, phone } = req.body;
     const phoneRegex = /^\+?\d{10,15}$/;
     if (!name || !phone) {
         return res.render('create_user', { error: 'Name and phone are required' });
@@ -39,11 +39,11 @@ exports.createUser = (req, res) => {
     if (!phoneRegex.test(phone)) {
         return res.render('create_user', { error: 'Invalid phone number format (e.g., 1234567890 or +1234567890)' });
     }
-    UserModel.create(name, phone, (err, result) => {
+    UserModel.create(name, password, phone, (err, result) => {
         if (err) {
             return res.render('create_user', { error: 'Failed to create user: ' + err.message });
         }
-        res.redirect('/users');
+        res.redirect('/login');
     });
 };
 
@@ -64,17 +64,17 @@ exports.showEditForm = (req, res) => {
 // Update a user
 exports.updateUser = (req, res) => {
     const id = req.params.id;
-    const { name, phone } = req.body;
+    const { name, password, phone } = req.body;
     const phoneRegex = /^\+?\d{10,15}$/;
     if (!name || !phone) {
-        return res.render('edit_user', { user: { id, name, phone }, error: 'Name and phone are required' });
+        return res.render('edit_user', { user: { id, name, password, phone }, error: 'Name and phone are required' });
     }
     if (!phoneRegex.test(phone)) {
-        return res.render('edit_user', { user: { id, name, phone }, error: 'Invalid phone number format (e.g., 1234567890 or +1234567890)' });
+        return res.render('edit_user', { user: { id, name, password, phone }, error: 'Invalid phone number format (e.g., 1234567890 or +1234567890)' });
     }
-    UserModel.update(id, name, phone, (err, result) => {
+    UserModel.update(id, name, password, phone, (err, result) => {
         if (err) {
-            return res.render('edit_user', { user: { id, name, phone }, error: 'Failed to update user: ' + err.message });
+            return res.render('edit_user', { user: { id, name, password, phone }, error: 'Failed to update user: ' + err.message });
         }
         if (result.changes === 0) {
             return res.status(404).json({ error: 'User not found' });

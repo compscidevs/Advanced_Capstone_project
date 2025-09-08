@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit User</title>
-    <link rel="stylesheet" href="../public/style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <div class="form-container">
@@ -15,6 +15,10 @@
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" value="<%= user.name %>" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" value="<%= user.password %>" required>
             </div>
             <div class="form-group">
                 <label for="phone">Phone:</label>

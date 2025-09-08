@@ -2,46 +2,130 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Agreements</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Agreements | Agreement App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        body {
+            background: linear-gradient(120deg, #007bff 0%, #6dd5ed 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .agreements-container {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .agreements-container h1 {
+            margin-bottom: 24px;
+            color: #007bff;
+            font-weight: 600;
+        }
+        .create-button {
+            display: inline-block;
+            margin-bottom: 24px;
+            background: #007bff;
+            color: #fff;
+            padding: 10px 22px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .create-button:hover {
+            background: #0056b3;
+        }
+        #agreement-list {
+            margin-top: 10px;
+        }
         .agreement-item {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 10px;
+            border: 1px solid #eee;
+            padding: 18px 16px;
+            margin-bottom: 18px;
             border-radius: 8px;
             background-color: #f9f9f9;
+            text-align: left;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         .agreement-item h3 {
             margin-top: 0;
+            margin-bottom: 8px;
             color: #007bff;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        .agreement-item h3 a {
+            color: #007bff;
+            text-decoration: none;
+            transition: text-decoration 0.2s;
+        }
+        .agreement-item h3 a:hover {
+            text-decoration: underline;
+        }
+        .parties {
+            font-size: 0.98em;
+            color: #555;
+            margin-bottom: 10px;
         }
         .agreement-item p {
             white-space: pre-wrap;
-        }
-        .parties {
-            font-size: 0.9em;
-            color: #666;
             margin-bottom: 10px;
+            color: #333;
+        }
+        .agreement-item small {
+            color: #888;
+        }
+        .agreement-actions {
+            margin-top: 12px;
+        }
+        .agreement-actions a {
+            display: inline-block;
+            margin-right: 12px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: text-decoration 0.2s;
+        }
+        .agreement-actions a:last-child {
+            margin-right: 0;
+        }
+        .agreement-actions a:hover {
+            text-decoration: underline;
+            color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="agreements-container">
         <h1>Agreements</h1>
         <a href="/agreements/create" class="create-button">Create New Agreement</a>
         <div id="agreement-list">
             <% agreements.forEach(agreement => { %>
                 <div class="agreement-item">
-                    <h3><%= agreement.title %></h3>
+                    <h3>
+                        <a href="/agreements/<%= agreement.id %>"><%= agreement.title %></a>
+                    </h3>
                     <div class="parties">
                         <strong>Parties:</strong> <%= agreement.partyA_phone %> and <%= agreement.partyB_phone %>
                     </div>
                     <p><%= agreement.content %></p>
+                    <small>Created By: <%= agreement.created_by %></small>
                     <small>Created: <%= new Date(agreement.created_at).toLocaleDateString() %></small>
-                    <a href="/agreements/<%= agreement.id %>/edit">Edit</a>
-                    <a href="/agreements/<%= agreement.id %>/delete" onclick="return confirm('Are you sure?')">Delete</a>
-
+                    <div class="agreement-actions">
+                        <a href="/agreements/<%= agreement.id %>/edit">Edit</a>
+                        <a href="/agreements/<%= agreement.id %>/delete" onclick="return confirm('Are you sure?')">Delete</a>
+                    </div>
                 </div>
             <% }); %>
         </div>

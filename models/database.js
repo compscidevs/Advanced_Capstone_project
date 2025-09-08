@@ -13,6 +13,7 @@ let db = new sqlite3.Database(DB_SOURCE, (err) => {
         db.run(`CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name text, 
+            password text, 
             phone text UNIQUE, 
             CONSTRAINT phone_unique UNIQUE (phone)
         )`,
@@ -21,9 +22,9 @@ let db = new sqlite3.Database(DB_SOURCE, (err) => {
                 // Table already created
             } else {
                 // insert some initial data
-                const insert = 'INSERT OR IGNORE INTO users (name, phone) VALUES (?,?)';
-                db.run(insert, ["Alice", "2565555565"]);
-                db.run(insert, ["Bob", "2567778778"]);
+                const insert = 'INSERT OR IGNORE INTO users (name, password, phone) VALUES (?,?,?)';
+                db.run(insert, ["Alice", "pass", "2565555565"]);
+                db.run(insert, ["Bob", "pass", "2567778778"]);
             }
         });  
     }

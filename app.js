@@ -2,15 +2,23 @@ const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const homeRoutes = require('./routes/homeRoutes');
 const userRoutes = require('./routes/userRoutes');
 const agreementRoutes = require('./routes/agreementRoutes');
 const db = require('./models/database');
 
+const session = require('express-session');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Security middleware
 app.use(helmet());
+
+app.use(session({
+    secret: 'your_secret_key', // use a strong secret in production!
+    resave: false,
+    saveUninitialized: false
+}));
 
 // Rate limiting to prevent abuse
 const limiter = rateLimit({
@@ -31,6 +39,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
+app.use('/', homeRoutes);
 app.use('/users', userRoutes);
 app.use('/agreements', agreementRoutes);
 

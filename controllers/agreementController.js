@@ -18,10 +18,28 @@ exports.showCreateAgreementForm = (req, res) => {
     res.render(path.join(__dirname, '../views/createAgreement.ejs'));
 };
 
+// Get user by ID (API response)
+exports.getAgreementById = (req, res) => {
+    const id = req.params.id;
+    agreementModel.getAgreementById(id, (err, agreement) => {
+        if (err) {
+            return res.status(500).json({ error: 'Database error' });
+        }
+        if (!agreement) {
+            return res.status(404).json({ error: 'Agreement not found' });
+        }
+        res.json(agreement);
+    });
+};
+
+
 // Method to create a new agreement from the form data, now using phone numbers and created_by
 exports.createAgreement = (req, res) => {
-    const { title, content, partyA_phone, partyB_phone } = req.body; // extracted from the form
-    const created_by = req.user ? req.user.id : 'anonymous'; // user creating the agreement
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    const { title, partyA_phone, partyB_phone, content } = req.body;
+    const created_by = req.session.user.phone; // This is just the phone number
     if (!title || !content || !partyA_phone || !partyB_phone) {
         res.status(400).send('Title, content, Party A\'s phone, and Party B\'s phone are required.');
         return;
@@ -34,7 +52,7 @@ exports.createAgreement = (req, res) => {
             return;
         }
         console.log(`Agreement created with ID: ${result.lastID}`);
-        res.redirect('/agreements');
+        res.redirect('/dashboard');
     });
 };
 
@@ -76,5 +94,35 @@ exports.deleteAgreement = (req, res) => {
             return;
         }
         res.redirect('/agreements');
+    });
+};
+
+// Method to confirm an agreement (update status to 'confirmed')
+exports.confirmAgreement = (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    const agreementId = req.params.id;
+    agreementModel.updateAgreementStatus(agreementId, 'confirmed', (err) => {
+        if (err) {
+            console.error('Error confirming agreement:', err.message);
+            return res.status(500).send('Error confirming agreement');
+        }
+        res.redirect('/dashboard');
+    });
+};
+
+// Method to confirm an agreement (update status to 'confirmed')
+exports.denyAgreement = (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    const agreementId = req.params.id;
+    agreementModel.updateAgreementStatus(agreementId, 'denied', (err) => {
+        if (err) {
+            console.error('Error denying agreement:', err.message);
+            return res.status(500).send('Error denying agreement');
+        }
+        res.redirect('/dashboard');
     });
 };
