@@ -4,7 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User List</title>
-    <link rel="stylesheet" href="/style.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #87ceeb 0%, #e0e7ff 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 32px 28px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(60, 72, 88, 0.12);
+            text-align: center;
+        }
+        h1 {
+            color: #3b82f6;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+        p {
+            color: #374151;
+            margin-bottom: 12px;
+        }
+        ul.user-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 24px;
+        }
+        ul.user-list li {
+            background: #f1f5f9;
+            margin-bottom: 12px;
+            padding: 14px 18px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.05rem;
+        }
+        .user-actions a {
+            margin-left: 12px;
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .user-actions a:hover {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+        .api-list {
+            margin-top: 28px;
+            text-align: left;
+        }
+        .api-list p {
+            color: #6366f1;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .api-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .api-list li {
+            margin-bottom: 8px;
+            font-size: 0.98rem;
+        }
+        .api-list a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .api-list a:hover {
+            color: #6366f1;
+            text-decoration: underline;
+        }
+        @media (max-width: 700px) {
+            .container {
+                max-width: 95vw;
+                padding: 18px 8px;
+            }
+            ul.user-list li {
+                font-size: 0.98rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .user-actions a {
+                margin-left: 0;
+                margin-top: 6px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -26,8 +124,3 @@
             <ul>
                 <li><a href="/users/1">GET /users/1</a> - Get user with ID 1</li>
                 <li><a href="/users/2">GET /users/2</a> - Get user with ID 2</li>
-            </ul>
-        </div>
-    </div>
-</body>
-</html>
