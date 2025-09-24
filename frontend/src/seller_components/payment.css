@@ -1,0 +1,79 @@
+.payment-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.payment-heading {
+    color: #6a0dad;
+}
+
+.payment-methods {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.payment-method-button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    font-size: medium;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    background-color: #b7b5b5;
+
+}
+
+.payment-method-button.active {
+    background-color: #77009c;
+    /* Purple theme color */
+    color: #fff;
+}
+
+.payment-method-button:hover {
+    background-color: #6aa4ac;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    font-size: medium;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#mobileMoneyNumber {
+    font-size: 14px;
+}
+
+.payment-buttons {
+    width: 100%;
+    padding: 10px;
+    background-color: #6a0dad;
+    /* Purple theme color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* Add transition for smooth hover effect */
+}
+
+.payment-buttons:hover {
+    background-color: #39d3ee;
+    text-decoration: #fff;
+    /* Darker shade of purple for hover effect */
+}

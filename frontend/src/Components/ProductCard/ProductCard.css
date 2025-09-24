@@ -1,0 +1,151 @@
+.product-card-container {
+  /* margin-bottom: 4.8rem;
+  margin-left: 4.8rem; */
+  position: relative;
+  overflow: hidden;
+  max-width: 130rem;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 3.2rem 2.6rem;
+  margin-bottom: 2.6rem;
+}
+
+.product-card-wrapper {
+  display: flex;
+  gap: 2.4rem;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.product-card {
+  min-width: 29.4rem;
+  max-width: 29.4rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.product-img {
+  width: 100%;
+  height: 20rem;
+  object-fit: cover;
+}
+
+.product-content {
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.product-card-row2,
+.product-card-row3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-tag {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  color: #707070;
+}
+
+.product-name {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.discout {
+  font-size: 1.8rem;
+  background-color: #77009c;
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  border-radius: 4px;
+}
+
+.new-price {
+  color: #77009c;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.old-price {
+  font-size: 1.8rem;
+  text-decoration: line-through;
+  color: #707070;
+}
+
+.fav-icon span {
+  color: #77009c;
+  font-size: 3.6rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3.2rem;
+}
+
+.product-card-title {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.8rem;
+  text-transform: capitalize;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: #333;
+}
+
+.card-title-text {
+  font-size: 3.2rem;
+}
+
+.view-link-text {
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.view-link-text:hover {
+  color: #77009c;
+  cursor: pointer;
+}
+
+.view-link-text .text {
+  transition: all 0.3s ease;
+}
+
+.text:hover {
+  text-decoration: underline;
+}
+
+.card-btns {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.pre-btn,
+.next-btn {
+  border: 0;
+  outline: 0;
+  background-color: #f2f2f2;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  color: #7a7a7a;
+  transition: all 0.3s ease;
+}
+
+.pre-btn:hover,
+.next-btn:hover {
+  background-color: #dadada;
+  color: #77009c;
+  cursor: pointer;
+}

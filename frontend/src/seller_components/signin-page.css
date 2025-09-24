@@ -1,0 +1,95 @@
+/* signin-page.css */
+
+.vendor-signin-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .vendor-form-group {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .vendor-signin-container {
+    background-color: #fff;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .vendor-signin-container h2 {
+    color: #77009c;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .vendor-form-group {
+    margin-bottom: 15px;
+  }
+  
+  .vendor-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .vendor-form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .vendor-form-group input:focus {
+    border-color: #77009c;
+    outline: none;
+    box-shadow: 0 0 5px rgba(119, 0, 156, 0.5);
+  }
+  
+  button[type="submit"] {
+    background-color: #77009c;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #5e007a;
+  }
+  
+  .vendor-signin-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .vendor-signin-link p {
+    color:#333;
+    font-size: small;
+  }
+  
+  .vendor-signin-link a {
+    color: #77009c;
+    text-decoration: none;
+  }
+  
+  
+  .vendor-signin-logo {
+    height: 7.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .vendor-link{
+    color: #ccc;
+    font-size: smaller;
+  }
+  
+  
