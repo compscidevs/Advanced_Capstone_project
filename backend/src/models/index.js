@@ -1,24 +1,25 @@
-import mongoose from 'mongoose';
+const Category = require('./Category');
+const Product = require('./Product');
+const Gallery = require('./Gallery');
+const Specification = require('./Specification');
+const Size = require('./Size');
+const Color = require('./Color');
+const Cart = require('./Cart');
+const CartOrder = require('./CartOrder');
+const CartOrderItem = require('./CartOrderItem');
+const Tax = require('./Tax');
+const Review = require('./Review');
 
-const itemSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    description: {
-        type: String,
-        required: true,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-});
-
-const Item = mongoose.model('Item', itemSchema);
-
-export { Item };
+module.exports = {
+  Category,
+  Product,
+  Gallery,
+  Specification,
+  Size,
+  Color,
+  Cart,
+  CartOrder,
+  CartOrderItem,
+  Tax,
+  Review
+};
